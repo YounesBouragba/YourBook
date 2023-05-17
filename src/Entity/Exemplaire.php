@@ -23,12 +23,12 @@ class Exemplaire
     #[ORM\JoinColumn(nullable: false)]
     private ?Stock $stock = null;
 
-    #[ORM\ManyToOne(inversedBy: 'exemplaires')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Stock $Livre = null;
 
     #[ORM\OneToMany(mappedBy: 'exemplaire', targetEntity: Emprunt::class)]
     private Collection $emprunts;
+
+    #[ORM\ManyToOne(inversedBy: 'exemplaires')]
+    private ?Livre $livre = null;
 
     public function __construct()
     {
@@ -64,17 +64,7 @@ class Exemplaire
         return $this;
     }
 
-    public function getLivre(): ?Stock
-    {
-        return $this->Livre;
-    }
 
-    public function setLivre(?Stock $Livre): self
-    {
-        $this->Livre = $Livre;
-
-        return $this;
-    }
 
     /**
      * @return Collection<int, Emprunt>
@@ -102,6 +92,18 @@ class Exemplaire
                 $emprunt->setExemplaire(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getLivre(): ?Livre
+    {
+        return $this->livre;
+    }
+
+    public function setLivre(?Livre $livre): self
+    {
+        $this->livre = $livre;
 
         return $this;
     }

@@ -39,9 +39,18 @@ class Livre
     #[ORM\ManyToMany(targetEntity: Genre::class)]
     private Collection $genres;
 
+    #[ORM\OneToMany(mappedBy: 'livre', targetEntity: Exemplaire::class)]
+    private Collection $exemplaires;
+
     public function __construct()
     {
         $this->genres = new ArrayCollection();
+        $this->exemplaires = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return $this->getTitre().'-'. $this->getAuteur().'-'. $this->getEditeur();
     }
 
     public function getId(): ?int
@@ -109,12 +118,12 @@ class Livre
         return $this;
     }
 
-    public function getEditeurId(): ?Editeur
+    public function getEditeur(): ?Editeur
     {
         return $this->editeur;
     }
 
-    public function setEditeurId(?Editeur $editeur): self
+    public function setEditeur(?Editeur $editeur): self
     {
         $this->editeur= $editeur;
 
@@ -141,6 +150,36 @@ class Livre
     public function removeGenre(Genre $genre): self
     {
         $this->genres->removeElement($genre);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Exemplaire>
+     */
+    public function getExemplaires(): Collection
+    {
+        return $this->exemplaires;
+    }
+
+    public function addExemplaire(Exemplaire $exemplaire): self
+    {
+        if (!$this->exemplaires->contains($exemplaire)) {
+            $this->exemplaires->add($exemplaire);
+            $exemplaire->setLivre($this);
+        }
+
+        return $this;
+    }
+
+    public function removeExemplaire(Exemplaire $exemplaire): self
+    {
+        if ($this->exemplaires->removeElement($exemplaire)) {
+            // set the owning side to null (unless already changed)
+            if ($exemplaire->getLivre() === $this) {
+                $exemplaire->setLivre(null);
+            }
+        }
 
         return $this;
     }
