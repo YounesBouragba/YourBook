@@ -2,7 +2,7 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Adherent;
+use App\Entity\Admin;
 use App\Entity\Genre;
 use App\Entity\Livre;
 use App\Entity\Stock;
@@ -10,6 +10,7 @@ use App\Entity\Usure;
 use App\Entity\Auteur;
 use App\Entity\Editeur;
 use App\Entity\Emprunt;
+use App\Entity\Adherent;
 use App\Entity\Exemplaire;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -61,5 +62,6 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Exemplaire', 'fas fa-list', Exemplaire::class);
         yield MenuItem::linkToCrud('Adherent', 'fas fa-list', Adherent::class);
         yield MenuItem::linkToCrud('Emprunt', 'fas fa-list', Emprunt::class);
+        yield MenuItem::linkToCrud('Admin', 'fas fa-list', Admin::class);
     }
 }
