@@ -33,6 +33,15 @@ class Adherent
     #[ORM\OneToMany(mappedBy: 'adherent', targetEntity: Emprunt::class)]
     private Collection $emprunts;
 
+    public function __toString()
+    {
+        return $this->getNom();
+               $this->getPrenom();
+               $this->getEmail();
+               $this->getTelephone();
+               $this->getEmprunts();
+    }
+
     public function __construct()
     {
         $this->emprunts = new ArrayCollection();

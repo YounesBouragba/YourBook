@@ -30,6 +30,11 @@ class Exemplaire
     #[ORM\ManyToOne(inversedBy: 'exemplaires')]
     private ?Livre $livre = null;
 
+    public function __toString()
+    {
+        return $this->getId().'-'.$this->getLivre();
+    }
+
     public function __construct()
     {
         $this->emprunts = new ArrayCollection();
